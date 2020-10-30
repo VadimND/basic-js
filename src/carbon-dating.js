@@ -1,9 +1,19 @@
 const CustomError = require("../extensions/custom-error");
 
-const MODERN_ACTIVITY= 15; 
-const HALF_LIFE_PERIOD= 5730;
+module.exports = function dateSample(sampleActivity) {
+  const MODERN_ACTIVITY = 15;
+  const HALF_LIFE_PERIOD = 5730;
+  let number;
 
-module.exports = function dateSample(/* sampleActivity */) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
+  if (typeof sampleActivity === 'string') {
+    sampleActivity = parseInt(sampleActivity);
+    if (sampleActivity > 0 && typeof sampleActivity === 'number' && sampleActivity < 15) {
+      number = (Math.log(MODERN_ACTIVITY / sampleActivity).toFixed(4) / (0.693 / HALF_LIFE_PERIOD).toFixed(8)).toFixed(0);
+    } else {
+      number = false;
+    }
+  } else {
+    number = false;
+  }
+  return number;
 };
